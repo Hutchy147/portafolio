@@ -295,6 +295,27 @@ h1 {
   display: grid;
   gap: .75rem;
 }
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  padding: .9rem 1rem 0;
+}
+.tag {
+  font-size: .78rem;
+  line-height: 1;
+  padding: .42rem .6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .10);
+  color: rgba(255, 255, 255, .86);
+  letter-spacing: .01em;
+  user-select: none;
+}
+.tag--accent {
+  border-color: color-mix(in srgb, var(--accent) 50%, rgba(255, 255, 255, .08));
+  background: color-mix(in srgb, var(--accent) 12%, rgba(255, 255, 255, .04));
+}
 .ct {
   margin: 0;
   font-size: 1rem;
@@ -502,21 +523,55 @@ footer {
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(255, 255, 255, .02);
+  background: rgba(255, 255, 255, .03);
   aspect-ratio: auto;
 }
 .m-hero img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
+  height: clamp(320px, 45vh, 520px);
+  object-fit: contain;
   object-position: center;
+  background: rgba(0, 0, 0, .22);
 }
 .m-desc {
   margin-top: 14px;
   line-height: 1.65;
   color: rgba(255, 255, 255, .82);
+}
+.m-features {
+  margin-top: 8px;
+}
+.m-bullets {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, .82);
+}
+.m-bullets li {
+  line-height: 1.55;
+}
+.m-meta {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .03);
+}
+.m-dl {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 8px 12px;
+  margin: 0;
+}
+.m-dl dt {
+  color: var(--muted);
+  font-weight: 600;
+}
+.m-dl dd {
+  margin: 0;
+  color: rgba(255, 255, 255, .86);
 }
 .stack-block {
   margin-top: 16px;
@@ -558,29 +613,60 @@ footer {
   box-shadow: 0 14px 40px rgba(255, 122, 24, .18);
 }
 .thumbs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: .55rem;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 10px 2px;
 }
 .th {
+  flex: 0 0 160px;
+  width: 160px;
+  height: 100px;
   padding: 0;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, .08);
   overflow: hidden;
-  aspect-ratio: 16/9;
-  background: var(--soft);
+  background: rgba(255, 255, 255, .03);
   cursor: pointer;
-  opacity: .86;
+  opacity: .92;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, opacity .2s ease;
 }
 .th img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(0, 0, 0, .22);
+}
+.th:hover {
+  transform: translateY(-1px);
+  opacity: 1;
 }
 .th.active {
   opacity: 1;
-  border-color: color-mix(in srgb, var(--accent) 64%, var(--border));
-  box-shadow: 0 0 0 2px var(--glow);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255, 122, 24, .28);
+}
+section[aria-label="Galería del proyecto"] .big {
+  aspect-ratio: auto;
+  min-height: clamp(260px, 40vh, 480px);
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, .08);
+}
+#gMain {
+  width: 100%;
+  height: clamp(260px, 40vh, 480px);
+  object-fit: contain;
+  object-position: center;
+  background: rgba(0, 0, 0, .22);
+}
+.m-cap {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: .92rem;
 }
 
 /* =========================
@@ -645,13 +731,13 @@ footer {
 <section id="contacto" class="reveal"><div class="container"><h2 class="h2">Contacto</h2><p class="sec-lead">Escribime desde este formulario.</p><article class="panel"><form id="contactForm" class="form" novalidate><div class="f"><label for="name">Nombre</label><input id="name" name="name" type="text" autocomplete="name" required /></div><div class="f"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required /></div><div class="f"><label for="message">Mensaje</label><textarea id="message" name="message" required></textarea></div><button class="btn pri" type="submit">Enviar mensaje</button><p id="status" class="status" role="status" aria-live="polite"></p></form></article></div></section>
 </main>
 <footer><div class="container">© <span id="year"></span> Mateo Gomez. Portfolio académico.</div></footer>
-<div id="overlay" class="ov" aria-hidden="true"><aside class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" tabindex="-1"><div class="mh"><h3 id="mTitle">Detalle del proyecto</h3><button id="close" class="x" type="button" aria-label="Cerrar panel">×</button></div><div class="mb"><div class="big m-hero"><img id="main" src="" alt="Imagen principal" /></div><div id="desc" class="desc m-desc"></div><div class="sep"></div><section class="stack-block m-stack-wrap" aria-label="Tecnologías usadas"><h4 class="stack-title m-subtitle">Tecnologías usadas</h4><div id="mStack" class="chips m-stack"></div></section><div class="sep"></div><section aria-label="Galería del proyecto"><div class="big"><img id="gMain" src="" alt="Galería" loading="lazy" /></div><div id="thumbs" class="thumbs"></div></section><a id="repo" class="btn pri" target="_blank" rel="noopener noreferrer" href="#">Ver repositorio</a></div></aside></div>
+<div id="overlay" class="ov" aria-hidden="true"><aside class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" tabindex="-1"><div class="mh"><h3 id="mTitle">Detalle del proyecto</h3><button id="close" class="x" type="button" aria-label="Cerrar panel">×</button></div><div class="mb"><div class="big m-hero"><img id="main" src="" alt="Imagen principal" /></div><div id="desc" class="desc m-desc"></div><div class="sep"></div><section class="stack-block m-stack-wrap" aria-label="Tecnologías usadas"><h4 class="stack-title m-subtitle">Tecnologías usadas</h4><div id="mStack" class="chips m-stack"></div></section><section class="m-features"><h3 class="m-subtitle">Características</h3><ul class="m-bullets" id="mFeatures"></ul></section><section class="m-meta"><h3 class="m-subtitle">Ficha rápida</h3><dl class="m-dl" id="mMeta"></dl></section><div class="sep"></div><section aria-label="Galería del proyecto"><div class="big"><img id="gMain" src="" alt="Galería" loading="lazy" /></div><div class="m-cap" id="mCap"></div><div id="thumbs" class="thumbs"></div></section><a id="repo" class="btn pri" target="_blank" rel="noopener noreferrer" href="#">Ver repositorio</a></div></aside></div>
 <script>
 // =========================
 // 1) CONFIG / CONSTANTS
 // =========================
 const USER_EMAIL = "mateogomez3521@gmail.com";
-const skills = ["HTML", "CSS", "JavaScript", "Python", "Flask", "MySQL", "Flutter"];
+const skills = ["HTML", "CSS", "JavaScript", "Python", "Flask", "MySQL", "Flutter", "Dart", "Node.js", "Pandas"];
 let lastFocus = null;
 let manualTheme = null;
 
@@ -663,34 +749,72 @@ const projects = [
     id: "franco-invader",
     title: "Franco Invader",
     shortDescription: "Juego arcade inspirado en Space Invaders desarrollado desde cero con Pygame.",
-    longDescription: [
-      "Franco Invader es un juego arcade 2D inspirado en el clásico Space Invaders, desarrollado utilizando Pygame. El proyecto explora mecánicas básicas de gameplay, manejo de sprites y detección de colisiones, junto con la implementación de lógica de enemigos y control del jugador en tiempo real."
-    ],
+    tags: ["Juego", "Pygame"],
+    longDescription:
+      "Franco Invader es un juego arcade 2D inspirado en el clásico Space Invaders, desarrollado utilizando Pygame. El proyecto explora mecánicas básicas de gameplay, manejo de sprites y detección de colisiones, junto con la implementación de lógica de enemigos y control del jugador en tiempo real.",
     stack: ["Python", "Pygame"],
     repoUrl: "https://github.com/Hutchy147/franco_invader",
-    images: ["images/franco-invader.jpeg"]
+    images: ["images/franco-invader/hero.jpeg"]
   },
   {
     id: "vinificacion",
     title: "Vinificación de vinos",
     shortDescription: "Sistema de trazabilidad y control del proceso productivo del vino para bodegas.",
-    longDescription: [
-      "Vinificación de vinos es una plataforma backend orientada a la trazabilidad y control del ciclo productivo del vino, desde la recepción de materia prima hasta la exportación. La solución permite gestionar procesos, asegurar calidad y mantener registro de cada etapa logística y productiva dentro de la bodega."
-    ],
+    tags: ["Backend", "API", "Trazabilidad"],
+    longDescription:
+      "Vinificación de vinos es una plataforma backend orientada a la trazabilidad y control del ciclo productivo del vino, desde la recepción de materia prima hasta la exportación. La solución permite gestionar procesos, asegurar calidad y mantener registro de cada etapa logística y productiva dentro de la bodega.",
     stack: ["Python", "Flask", "MySQL"],
     repoUrl: "https://github.com/Toomasmg/vinificacion_api",
-    images: ["images/vinificacion.jpeg"]
+    images: ["images/vinificacion/hero.jpeg"]
   },
   {
     id: "impulsar",
     title: "Impulsar",
     shortDescription: "Plataforma web para promoción de emprendimientos y productos digitales.",
-    longDescription: [
-      "Impulsar es una plataforma web diseñada para visibilizar emprendimientos y facilitar la promoción de productos. El proyecto busca brindar a emprendedores un espacio digital donde puedan presentar sus servicios, ampliar su alcance y potenciar sus ventas mediante una interfaz accesible y dinámica."
-    ],
+    tags: ["Web", "Producto", "Marketplace"],
+    longDescription:
+      "Impulsar es una plataforma web diseñada para visibilizar emprendimientos y facilitar la promoción de productos. El proyecto busca brindar a emprendedores un espacio digital donde puedan presentar sus servicios, ampliar su alcance y potenciar sus ventas mediante una interfaz accesible y dinámica.",
     stack: ["HTML", "CSS", "JavaScript", "Python", "MySQL"],
     repoUrl: "https://github.com/Franv-Dev/IMPULSAR",
-    images: ["images/impulsar.jpeg"]
+    images: ["images/impulsar/hero.jpeg"]
+  },
+  {
+    id: "metin2-autofarm",
+    title: "Metin2 Autofarm",
+    shortDescription: "Script de automatización para farming en Metin2 mediante auto inputs.",
+    tags: ["Automatización", "Scripting", "Gaming"],
+    longDescription:
+      "Metin2 Autofarm es una herramienta de automatización desarrollada en Python que permite ejecutar secuencias de inputs para optimizar el proceso de farming dentro del juego Metin2. El proyecto explora scripting, control de eventos y automatización de tareas repetitivas para mejorar la eficiencia del usuario sin intervención manual constante.",
+    stack: ["Python", "Pandas", "Automatización"],
+    repoUrl: "https://github.com/Hutchy147/metin2-auto",
+    images: ["images/metin2-autofarm/hero.jpeg"]
+  },
+  {
+    id: "como-llego",
+    title: "¿Cómo llego?",
+    shortDescription: "Aplicación logística orientada a la optimización de rutas y tiempos de entrega.",
+    tags: ["Mobile", "Logística", "Rutas"],
+    longDescription:
+      "¿Cómo llego? es una aplicación enfocada en la gestión logística y optimización de rutas de entrega. El proyecto busca mejorar la eficiencia del transporte mediante el cálculo de trayectos y la reducción de tiempos de distribución, integrando desarrollo mobile con Flutter y lógica backend para la coordinación de entregas.",
+    stack: ["Flutter", "Dart", "Node.js", "Python", "Pandas"],
+    repoUrl: "https://github.com/Hutchy147/como-llego-",
+    images: [
+      "images/como-llego/hero.jpeg",
+      "images/como-llego/menu.jpeg",
+      "images/como-llego/marker.jpeg",
+      "images/como-llego/ruta.jpeg"
+    ]
+  },
+  {
+    id: "sistema-ventas",
+    title: "Sistema de Ventas",
+    shortDescription: "Sistema de administración de ventas desarrollado como API REST.",
+    tags: ["API", "CRUD", "MySQL"],
+    longDescription:
+      "Sistema de Ventas es una API REST desarrollada con Flask y MySQL orientada a la gestión modular de productos, clientes, proveedores, categorías y ventas. El proyecto fue trabajado de forma colaborativa, implementando cada módulo en ramas separadas, lo que permitió una arquitectura organizada y escalable junto a un flujo de desarrollo estructurado.",
+    stack: ["Flask", "Flask-SQLAlchemy", "MySQL", "PyMySQL", "Postman", "Git & GitHub"],
+    repoUrl: "https://github.com/Hutchy147/repo-ventas",
+    images: ["images/sistema-ventas/hero.jpeg"]
   }
 ];
 
@@ -704,6 +828,9 @@ const el = {
   gMain: document.getElementById("gMain"),
   desc: document.getElementById("desc"),
   mStack: document.getElementById("mStack"),
+  mFeatures: document.getElementById("mFeatures"),
+  mMeta: document.getElementById("mMeta"),
+  mCap: document.getElementById("mCap"),
   thumbs: document.getElementById("thumbs"),
   repo: document.getElementById("repo"),
   close: document.getElementById("close"),
@@ -755,7 +882,10 @@ function renderProjects() {
     c.type = "button";
     c.className = "card reveal";
     c.setAttribute("aria-label", `Ver detalle del proyecto ${p.title}`);
-    c.innerHTML = `<div class="media"><img src="${p.images[0]}" alt="Vista previa de ${p.title}" loading="lazy"/></div><div class="cbody"><h3 class="ct">${p.title}</h3><p class="cs">${p.shortDescription}</p><div class="chips">${p.stack.slice(0, 3).map((s) => `<span class='chip'>${s}</span>`).join("")}</div><span class="more">Ver más →</span></div>`;
+    const tagsHtml = p.tags?.length
+      ? `<div class="card-tags">${p.tags.slice(0, 3).map((t, i) => `<span class='tag ${i === 0 ? "tag--accent" : ""}'>${t}</span>`).join("")}</div>`
+      : "";
+    c.innerHTML = `<div class="media"><img src="${p.images[0]}" alt="Vista previa de ${p.title}" loading="lazy"/></div>${tagsHtml}<div class="cbody"><h3 class="ct">${p.title}</h3><p class="cs">${p.shortDescription}</p><div class="chips">${p.stack.slice(0, 3).map((s) => `<span class='chip'>${s}</span>`).join("")}</div><span class="more">Ver más →</span></div>`;
     c.addEventListener("click", () => openModal(p, c));
     frag.appendChild(c);
   });
@@ -773,7 +903,8 @@ function renderSkills() {
 }
 function renderDesc(list) {
   el.desc.innerHTML = "";
-  list.forEach((t) => {
+  const paragraphs = Array.isArray(list) ? list : [list];
+  paragraphs.forEach((t) => {
     const p = document.createElement("p");
     p.textContent = t;
     el.desc.appendChild(p);
@@ -782,17 +913,81 @@ function renderDesc(list) {
 function renderStack(list) {
   el.mStack.innerHTML = (list || []).map((s) => `<span class='chip'>${s}</span>`).join("");
 }
+function renderFeatures(project) {
+  const section = el.mFeatures.closest(".m-features");
+  let list = project.features;
+  if ((!list || !list.length) && project.id === "como-llego") {
+    list = [
+      "Búsqueda de ubicación y visualización en mapa",
+      "Configuración de ruta y navegación",
+      "Acceso a ubicaciones guardadas e historial"
+    ];
+  }
+  if (!list || !list.length) {
+    section.hidden = true;
+    el.mFeatures.innerHTML = "";
+    return;
+  }
+  section.hidden = false;
+  el.mFeatures.innerHTML = "";
+  const frag = document.createDocumentFragment();
+  list.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    frag.appendChild(li);
+  });
+  el.mFeatures.appendChild(frag);
+}
+function renderMeta(project) {
+  const section = el.mMeta.closest(".m-meta");
+  if (project.id !== "como-llego") {
+    section.hidden = true;
+    el.mMeta.innerHTML = "";
+    return;
+  }
+  const rows = [
+    ["Tipo", "App mobile / Logística"],
+    ["Rol", "Desarrollo (Flutter + backend)"],
+    ["Estado", "MVP"],
+    ["Año", "2026"]
+  ];
+  section.hidden = false;
+  el.mMeta.innerHTML = rows.map(([label, value]) => `<dt>${label}</dt><dd>${value}</dd>`).join("");
+}
+function captionForImage(projectId, src) {
+  if (projectId !== "como-llego" || !src) return "";
+  const file = src.split("/").pop().toLowerCase();
+  const map = {
+    "hero.jpeg": "Mapa principal",
+    "menu.jpeg": "Menú y accesos rápidos",
+    "marker.jpeg": "Marcador / acción principal",
+    "ruta.jpeg": "Ruta calculada"
+  };
+  return map[file] || "";
+}
+function renderGalleryCaption(projectId, src) {
+  const cap = captionForImage(projectId, src);
+  if (!cap) {
+    el.mCap.hidden = true;
+    el.mCap.textContent = "";
+    return;
+  }
+  el.mCap.hidden = false;
+  el.mCap.textContent = cap;
+}
 
 // =========================
 // 5) MODAL (open/close + focus trap + gallery)
 // =========================
-function renderThumbs(imgs, title) {
+function renderThumbs(imgs, title, projectId) {
   const gallerySection = el.thumbs.closest("section");
   el.thumbs.innerHTML = "";
   el.gMain.src = imgs[0];
   el.gMain.alt = `Galería de ${title}`;
+  renderGalleryCaption(projectId, imgs[0]);
   if (imgs.length <= 1) {
     gallerySection.hidden = true;
+    renderGalleryCaption(projectId, "");
     return;
   }
   gallerySection.hidden = false;
@@ -805,6 +1000,7 @@ function renderThumbs(imgs, title) {
     b.addEventListener("click", () => {
       el.gMain.src = src;
       el.gMain.alt = `Imagen ${i + 1} de ${title}`;
+      renderGalleryCaption(projectId, src);
       [...el.thumbs.querySelectorAll(".th")].forEach((x) => x.classList.remove("active"));
       b.classList.add("active");
     });
@@ -818,7 +1014,9 @@ function openModal(p, trigger) {
   el.main.alt = `Imagen principal de ${p.title}`;
   renderDesc(p.longDescription);
   renderStack(p.stack);
-  renderThumbs(p.images, p.title);
+  renderFeatures(p);
+  renderMeta(p);
+  renderThumbs(p.images, p.title, p.id);
   el.repo.href = p.repoUrl;
   el.overlay.classList.add("open");
   el.overlay.setAttribute("aria-hidden", "false");
